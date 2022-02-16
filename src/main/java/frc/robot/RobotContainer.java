@@ -27,6 +27,7 @@ public class RobotContainer {
   public static Gyro gyro = new Gyro();
   public static SwerveDriveTrain swerveDrive = new SwerveDriveTrain();
   public static Limelight limelight = new Limelight();
+  public static Pixycam pixycam;
   
   XboxController driver = new XboxController(0);
   //XboxController operator = new XboxController(1);
@@ -37,6 +38,13 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     swerveDrive.setDefaultCommand(new SwerveDriveCommand(driver));
+    int cams[] = Pixycam.enumerate();
+    System.out.println("number of cameras:" + cams.length);
+    if(cams.length > 0){
+      pixycam = new Pixycam(cams[0]);
+      pixycam.init();
+      System.out.println("pixycam started");
+    }
     configureButtonBindings();
     m_autoCommand = new DriveSwerveProfile(new double[][] {{0,0},{75,75},{150,0}}, 
                                         new double[] {90, 180}, 0.35);
@@ -65,11 +73,10 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     swerveDrive.resetOdometry();
-    swerveDrive.setOdometry(300, 70, 90);
     double[][] waypoints = new double[][] {{300, 29},{222,73},{115,69},{56,56}};
     double[] headings = new double[] {0, 20, 20};
     //m_autoCommand = new DriveSwerveProfile(waypoints, headings, 0.35);
-    m_autoCommand = new FourBallAuto();
+    m_autoCommand = new CenterThreeBall();
     return m_autoCommand;
   }
 }
