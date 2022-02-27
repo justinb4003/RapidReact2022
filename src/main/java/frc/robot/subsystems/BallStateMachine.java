@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
@@ -19,11 +20,15 @@ public class BallStateMachine extends SubsystemBase {
   int state = EMPTY;
   boolean intakeOn = false;
   boolean shooterOn = false;
+  boolean topEyeActive = false;
+  boolean bottomEyeActive = false;
 
   /** Creates a new BallStateMachine. */
   public BallStateMachine() {
+    /*
     topPhotoEye = new AnalogInput(0);
     bottomPhotoEye = new AnalogInput(1);
+    */
   }
 
   public void setIntakeOn(boolean on) {
@@ -34,11 +39,29 @@ public class BallStateMachine extends SubsystemBase {
     shooterOn = on;
   }
 
+  public void toggleTopEye() {
+    topEyeActive = !topEyeActive;
+  }
+
+  public void toggleBottomEye() {
+    bottomEyeActive = !bottomEyeActive;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    boolean bottomOn = bottomPhotoEye.getVoltage() > 0.8;
-    boolean topOn = topPhotoEye.getVoltage() > 0.8;
+    boolean debug = true;
+    boolean bottomOn;
+    boolean topOn;
+    if (debug) {
+      bottomOn = bottomEyeActive;
+      topOn = topEyeActive;
+    } else {
+      bottomOn = bottomPhotoEye.getVoltage() > 0.8;
+      topOn = topPhotoEye.getVoltage() > 0.8;
+    } 
+    SmartDashboard.putBoolean("Top Eye", topOn);
+    SmartDashboard.putBoolean("Bottom Eye", bottomOn);
     boolean intakeSubsystemOn = false;
     boolean entrySubsystemOn = false;
     boolean deliverySubsystemOn = false;
@@ -94,14 +117,14 @@ public class BallStateMachine extends SubsystemBase {
       }
     }
 
-    /*
-    if (RobotContainer.shooter.isUpToSpeed()) {
+    if (shooterOn && RobotContainer.shooter.isUpToSpeed()) {
       deliverySubsystemOn = true;
       entrySubsystemOn = true;
     }
+    
     RobotContainer.ballIntake.setPowerOn(intakeSubsystemOn);
     RobotContainer.ballDelivery.setPowerOn(deliverySubsystemOn);
     RobotContainer.ballEntry.setPowerOn(entrySubsystemOn);
-  */
+  
   }
 }

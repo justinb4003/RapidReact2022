@@ -27,10 +27,16 @@ public class RobotContainer {
   public static Gyro gyro = new Gyro();
   public static SwerveDriveTrain swerveDrive = new SwerveDriveTrain();
   public static Limelight limelight = new Limelight();
+  public static PixyCam2 pixyCam2; // = new PixyCam2();
   public static Pixycam pixycam;
+  public static Shooter shooter = new Shooter();
+  public static BallIntake ballIntake = new BallIntake();
+  public static BallEntry ballEntry = new BallEntry();
+  public static BallDelivery ballDelivery = new BallDelivery();
+  public static BallStateMachine ballStateMachine = new BallStateMachine();
   
   XboxController driver = new XboxController(0);
-  //XboxController operator = new XboxController(1);
+  XboxController operator = new XboxController(1);
 
   Command m_autoCommand = new ThreeBallAuto(); //DriveToPose(100, 20, 90, 0.4);
 
@@ -38,13 +44,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     swerveDrive.setDefaultCommand(new SwerveDriveCommand(driver));
-    int cams[] = Pixycam.enumerate();
-    System.out.println("number of cameras:" + cams.length);
-    if(cams.length > 0){
-      pixycam = new Pixycam(cams[0]);
-      pixycam.init();
-      System.out.println("pixycam started");
-    }
+
     configureButtonBindings();
     m_autoCommand = new DriveSwerveProfile(new double[][] {{0,0},{75,75},{150,0}}, 
                                         new double[] {90, 180}, 0.35);
@@ -60,9 +60,37 @@ public class RobotContainer {
     JoystickButton driverX = new JoystickButton(driver, XboxController.Button.kX.value);
     JoystickButton driverB = new JoystickButton(driver, XboxController.Button.kB.value);
     JoystickButton driverY = new JoystickButton(driver, XboxController.Button.kY.value);
+    JoystickButton driverA = new JoystickButton(driver, XboxController.Button.kA.value);
+    JoystickButton driverLBumper = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    JoystickButton driverRBumper = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+
+    /*
     driverX.whenPressed(new SetFieldRelative(false));
     driverB.whenPressed(new SetFieldRelative(true));
-    driverY.whenPressed(new AlignToTarget());
+    driverY.whenPressed(new ToggleDriveAligned());
+    driverA.whenPressed(new DriveToCargo(false));
+    */
+
+    driverY.whenPressed(new IncrementShooterSpeed(1000));
+    driverA.whenPressed(new IncrementShooterSpeed(-1000));
+    driverX.whenPressed(new TogglePhotoEye(true));
+    driverB.whenPressed(new TogglePhotoEye(false));
+    driverLBumper.whenPressed(new SetIntake(true));
+    driverRBumper.whenPressed(new SetIntake(false));
+
+    JoystickButton operatorX = new JoystickButton(operator, XboxController.Button.kX.value);
+    JoystickButton operatorY = new JoystickButton(operator, XboxController.Button.kY.value);
+    JoystickButton operatorA = new JoystickButton(operator, XboxController.Button.kA.value);
+    JoystickButton operatorB = new JoystickButton(operator, XboxController.Button.kB.value);
+  
+    /*
+    operatorB.whenPressed(new SetIntake(true));
+    operatorX.whenPressed(new SetIntake(false));
+
+    operatorY.whenPressed(new SetShooter(15000));
+    operatorA.whenPressed(new SetShooter(0));
+    */
+
   }
 
   /**

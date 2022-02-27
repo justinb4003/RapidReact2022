@@ -11,13 +11,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class BallEntry extends SubsystemBase {
-  VictorSPX leader, follower;
+  VictorSPX leader;//follower;
   /** Creates a new BallEntry. */
   public BallEntry() {
     leader = new VictorSPX(Constants.BALLENTRYLEADER);
+    /*
     follower = new VictorSPX(Constants.BALLENTRYFOLLOWER);
     follower.setInverted(true);
     follower.set(VictorSPXControlMode.Follower, Constants.BALLENTRYLEADER);
+    */
   }
 
   public void setPowerOn(boolean on) {

@@ -5,6 +5,9 @@
 package frc.robot.subsystems;
 
 import frc.robot.*;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -38,6 +41,10 @@ public class SwerveDriveTrain extends SubsystemBase {
   private final SwerveModule m_backRight = new SwerveModule(12, 22, 2, 730, "Back Right", false);
   private final SwerveModule m_frontRight = new SwerveModule(13, 23, 3, 3907,  "Front Right", false);
   boolean fieldRelative = true;
+  boolean driveAligned = false;
+  double goalX = 27*12;
+  double goalY = 27*6;
+  double kP = 0.015;
 
   // TODO: Will need to replace the gyro here with the navX system
   
@@ -54,6 +61,14 @@ public class SwerveDriveTrain extends SubsystemBase {
     m_odometry.resetPosition(new Pose2d(), new Rotation2d());
   }
 
+  public void setDriveAligned(boolean aligned) {
+    driveAligned = aligned;
+  }
+
+  public void toggleDriveAligned() {
+    driveAligned = !driveAligned;
+  }
+
   /**
    * Method to drive the robot using joystick info.
    *
@@ -64,6 +79,23 @@ public class SwerveDriveTrain extends SubsystemBase {
    */
   @SuppressWarnings("ParameterName")
   public void drive(double xSpeed, double ySpeed, double rot) {
+    if (driveAligned) {
+      if (RobotContainer.limelight.isTargetValid()) {
+        double x = -RobotContainer.limelight.getTargetX();
+        rot = kP * x * kMaxAngularSpeed;
+      } else {
+        Pose2d currentPose = getOdometry().getPoseMeters();
+        double deltaX = goalX - currentPose.getX();
+        double deltaY = goalY - currentPose.getY();
+        double targetAngle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+        double errorAngle = targetAngle - currentPose.getRotation().getDegrees();
+        while (errorAngle < -180) errorAngle += 360;
+        while (errorAngle > 180) errorAngle += 360;
+        rot = errorAngle / 180 * kMaxAngularSpeed;
+
+      }
+
+    }
     var swerveModuleStates =
         m_kinematics.toSwerveModuleStates(
             fieldRelative
@@ -84,6 +116,20 @@ public class SwerveDriveTrain extends SubsystemBase {
     RobotContainer.gyro.setInitialHeading(heading);
     m_odometry.resetPosition(new Pose2d(x, y, new Rotation2d(heading * Math.PI/180)), 
                   RobotContainer.gyro.getRotation2d());
+  }
+
+  public void setBrakeMode() {
+    m_frontLeft.getDriveMotor().setNeutralMode(NeutralMode.Brake);
+    m_frontRight.getDriveMotor().setNeutralMode(NeutralMode.Brake);
+    m_backLeft.getDriveMotor().setNeutralMode(NeutralMode.Brake);
+    m_backRight.getDriveMotor().setNeutralMode(NeutralMode.Brake);
+  }
+
+  public void setCoastMode() {
+    m_frontLeft.getDriveMotor().setNeutralMode(NeutralMode.Coast);
+    m_frontRight.getDriveMotor().setNeutralMode(NeutralMode.Coast);
+    m_backLeft.getDriveMotor().setNeutralMode(NeutralMode.Coast);
+    m_backRight.getDriveMotor().setNeutralMode(NeutralMode.Coast);
   }
 
   /** Updates the field relative position of the robot. */

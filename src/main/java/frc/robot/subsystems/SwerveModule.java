@@ -34,6 +34,11 @@ public class SwerveModule {
 
     boolean driveDisabled = false;
    String name;
+ 
+   public TalonFX getDriveMotor() {
+     return m_driveMotor;
+   }
+ 
    public SwerveModule(int driveMotorID, int turningMotorID, int turnEncoderChannel, int turnEncoderoffset, String name, boolean driveDisabled) {
      this(driveMotorID, turningMotorID, turnEncoderChannel, turnEncoderoffset,  name);
      this.driveDisabled = driveDisabled;
@@ -98,6 +103,9 @@ public class SwerveModule {
     //final double driveFeedforward = m_driveFeedforward.calculate(state.speedMetersPerSecond);
     //if (name == "Front Right") 
       //  System.out.println(name + " " + state.angle.getRadians() + " " + turnAngle);
+    boolean flag = true;
+    if (flag) return;
+
     double setPosition = state.angle.getRadians()/(2*Math.PI) * kTurnResolution;
     double revs = Math.round(currentTurnPosition / kTurnResolution);
     setPosition += revs * kTurnResolution;
