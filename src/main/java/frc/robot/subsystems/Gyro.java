@@ -13,7 +13,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 public class Gyro extends SubsystemBase {
   /** Creates a new Gyro. */
-  private final AHRS gyro = new AHRS(Port.kMXP);
+  private final AHRS gyro = new AHRS(Port.kUSB1);
   Rotation2d initialHeading = new Rotation2d();
   public Gyro() {}
 
@@ -32,5 +32,6 @@ public class Gyro extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    //System.out.println(gyro.getRotation2d());
   }
 }

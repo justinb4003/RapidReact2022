@@ -13,8 +13,8 @@ import frc.robot.subsystems.SwerveDriveTrain;
 import frc.robot.subsystems.SwerveModule;
 
 public class SwerveDriveCommand extends CommandBase {
-  private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(3);
-  private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(3);
+  private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(1.5);
+  private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(1.5);
   private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(3);
   XboxController controller;
   /** Creates a new SwerveDriveCommand. */
@@ -59,11 +59,11 @@ public class SwerveDriveCommand extends CommandBase {
     // mathematics). Xbox controllers return positive values when you pull to
     // the right by default.
     final var rot =
-        -m_rotLimiter.calculate(rotInput)
+        -0.7*m_rotLimiter.calculate(rotInput)
             * SwerveDriveTrain.kMaxAngularSpeed;
 
     //System.out.println(xSpeed + " " + ySpeed + " " + rot + " " + System.currentTimeMillis());
-    RobotContainer.swerveDrive.drive(xSpeed, ySpeed, rot);
+    RobotContainer.swerveDrive.drive(-xSpeed, -ySpeed, rot);
   }
 
   // Called once the command ends or is interrupted.

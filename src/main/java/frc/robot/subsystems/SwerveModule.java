@@ -13,6 +13,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /** Add your docs here. */
 public class SwerveModule {
@@ -48,7 +49,7 @@ public class SwerveModule {
     m_driveMotor = new TalonFX(driveMotorID);
     m_turningMotor = new TalonFX(turningMotorID);
 
-    m_driveMotor.setNeutralMode(NeutralMode.Coast);
+    m_driveMotor.setNeutralMode(NeutralMode.Brake);
     m_encoderOffset = turnEncoderoffset;
     m_driveMotor.config_kF(0, 0.0465);
     m_driveMotor.config_kP(0, 0.0);
@@ -92,7 +93,7 @@ public class SwerveModule {
     SwerveModuleState state =
         SwerveModuleState.optimize(desiredState, new Rotation2d(turnAngle));
 
-    
+    SmartDashboard.putNumber(name, currentTurnPosition);
 
     // Calculate the drive output from the drive PID controller.
     //final double driveOutput =
@@ -103,8 +104,6 @@ public class SwerveModule {
     //final double driveFeedforward = m_driveFeedforward.calculate(state.speedMetersPerSecond);
     //if (name == "Front Right") 
       //  System.out.println(name + " " + state.angle.getRadians() + " " + turnAngle);
-    boolean flag = true;
-    if (flag) return;
 
     double setPosition = state.angle.getRadians()/(2*Math.PI) * kTurnResolution;
     double revs = Math.round(currentTurnPosition / kTurnResolution);
@@ -116,6 +115,7 @@ public class SwerveModule {
     m_turnPIDController.setSetpoint(setPosition);
     double turnPower = m_turnPIDController.calculate(currentTurnPosition);
     m_turningMotor.set(TalonFXControlMode.PercentOutput, turnPower);
+    
   }
 
   public void resetTurnEncoder() {

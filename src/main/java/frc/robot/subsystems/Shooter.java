@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
@@ -44,6 +45,7 @@ public class Shooter extends SubsystemBase {
       speed = 0;
     }
     if (speed > 22000) speed = 22000;
+    RobotContainer.ballStateMachine.setShooterOn(speed != 0.0);
     SmartDashboard.putNumber("Shooter speed:", speed);
     leader.set(TalonFXControlMode.Velocity, speed);
   }
@@ -51,5 +53,6 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    System.out.println(speed + " " + leader.getSelectedSensorVelocity());
   }
 }

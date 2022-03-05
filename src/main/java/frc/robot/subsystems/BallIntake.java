@@ -18,7 +18,7 @@ public class BallIntake extends SubsystemBase {
   }
 
   public void setPowerOn(boolean on) {
-    if(on) intakeMotor.set(VictorSPXControlMode.PercentOutput, 1);
+    if(on) intakeMotor.set(VictorSPXControlMode.PercentOutput, 0.8);
     else intakeMotor.set(VictorSPXControlMode.PercentOutput, 0);
   }
 

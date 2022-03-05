@@ -127,7 +127,7 @@ public class DriveSwerveProfile extends CommandBase {
     // Prepare to update new parameter on curve
     double deltaS = currentVelocity * deltaT / currentTangent.length();
     double newS = currentS + deltaS;
-
+    //System.out.println(currentCurveNumber);
     if (newS > 1) { // we are going to the next curve
       // this is a little hacky, math could be improved, but probably not a big deal
       newS -= 1;

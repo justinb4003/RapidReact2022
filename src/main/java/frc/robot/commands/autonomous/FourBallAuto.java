@@ -15,7 +15,7 @@ public class FourBallAuto extends SequentialCommandGroup {
   public FourBallAuto() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    double[][] waypoints = new double[][] {{300, 29},{222,73},{122,69},{39,60}};
+    double[][] waypoints = new double[][] {{300, 29},{222,65},{122,50},{39,35}};
     double[] headings = new double[] {0, 20, 20};
     //m_autoCommand = new DriveSwerveProfile(waypoints, headings, 0.35);
     addCommands(

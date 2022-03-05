@@ -23,7 +23,7 @@ public class BallEntry extends SubsystemBase {
   }
 
   public void setPowerOn(boolean on) {
-    if(on) leader.set(VictorSPXControlMode.PercentOutput, 1);
+    if(on) leader.set(VictorSPXControlMode.PercentOutput, 0.4);
     else leader.set(VictorSPXControlMode.PercentOutput, 0);
   }
   

@@ -5,6 +5,12 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "2022.3.1"
 }
 
+repositories {
+    maven {
+        url 'https://nexus.otake.pw/repository/maven-public/'
+    }
+}
+
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
@@ -58,6 +64,7 @@ dependencies {
     //added for pixycam
     implementation fileTree(dir:'lib', include: '.so')
     implementation fileTree(dir: 'lib', include: ['*.jar'])
+    implementation 'pw.otake.pseudoresonance:pixy2-java-api:1.4.1'
 
     roborioDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.roborio)
     roborioDebug wpi.java.vendor.jniDebug(wpi.platforms.roborio)
