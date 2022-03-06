@@ -10,15 +10,28 @@ import frc.robot.utilities.ShotData;
 public class SetShot extends CommandBase {
   /** Creates a new SetShot. */
   int distance;
+  boolean on = false;
   public SetShot(int distance) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.distance = distance;
   }
 
+  public SetShot(int distance, boolean on) {
+    this(distance);
+    this.on = on;
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    ShotData.setShot(distance);
+    if(on){
+      ShotData.setShot(distance,true);
+    }
+    else{
+      ShotData.setShot(distance);
+    }
+    
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.

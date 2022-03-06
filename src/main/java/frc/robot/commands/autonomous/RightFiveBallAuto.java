@@ -17,7 +17,7 @@ public class RightFiveBallAuto extends SequentialCommandGroup {
   double[][] waypoints = new double[][] {
     {334.3129825478784, 71.24606320230626},
     //{299.0769098371766, 19.507841240362247},
-    {299.0769098371766, 30},
+    {290, 30},
     {258.6843386810062, 62.764387470840035},
     {225.7135183021015, 95}
   };
@@ -25,7 +25,7 @@ public class RightFiveBallAuto extends SequentialCommandGroup {
   public RightFiveBallAuto() {
     int shot1 = ShotData.FEET10;
     int shot2 = ShotData.FEET12;
-    int shot3 = ShotData.FEET12;
+    int shot3 = ShotData.FEET14;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -35,15 +35,15 @@ public class RightFiveBallAuto extends SequentialCommandGroup {
       new DriveSwerveProfile(waypoints, headings, 0.3),
       new SetShot(shot1, true),
       new Wait(1000),
-      new DriveForDistance(20, -0.25, 0),
+      new DriveForDistance(15, -0.25, 0),
       new SetShot(shot2, true),
       new Wait(1500),
       new SetShooter(0),
-      new DriveToPose(30, 52, 30, 0.5),
+      new DriveToPose(35, 55, 30, 0.6),
       new Wait(1500),
       new ParallelCommandGroup(
         new SequentialCommandGroup(new Wait(1500), new SetShooterSpeed(ShotData.speeds[shot3])),
-        new DriveToAlignedPose(200, 60, 0.5)
+        new DriveToAlignedPose(220, 60, 0.6)
       ),
       new SetShot(shot3, true),
       new Wait(1500),

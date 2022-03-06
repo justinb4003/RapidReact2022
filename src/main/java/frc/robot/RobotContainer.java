@@ -29,7 +29,7 @@ public class RobotContainer {
   
   public static Gyro gyro = new Gyro();
   public static SwerveDriveTrain swerveDrive = new SwerveDriveTrain();
-  public static Limelight limelight;// = new Limelight();
+  public static Limelight limelight = new Limelight();
   public static PixyCam2 pixyCam2; // = new PixyCam2();
   public static Pixycam pixycam;
   public static Shooter shooter = new Shooter();
@@ -73,8 +73,9 @@ public class RobotContainer {
     driverB.whenPressed(new SetFieldRelative(true));
     driverY.whenPressed(new AlignToTarget());
     //driverStartButton.whenPressed(new ToggleDiverter());
+    
+    driverA.whenPressed(new ToggleDriveAligned());
     /*
-    driverY.whenPressed(new ToggleDriveAligned());
     driverA.whenPressed(new DriveToCargo(false));
     */
 
@@ -117,6 +118,8 @@ public class RobotContainer {
     double[] headings = new double[] {0, 20, 20};
     //m_autoCommand = new DriveSwerveProfile(waypoints, headings, 0.35);
     m_autoCommand = new RightFiveBallAuto();
+    m_autoCommand = new LeftTwoBall();
+    m_autoCommand = new CenterFourBall();
     return m_autoCommand;
   }
 }

@@ -59,11 +59,11 @@ public class SwerveDriveCommand extends CommandBase {
     // mathematics). Xbox controllers return positive values when you pull to
     // the right by default.
     final var rot =
-        -0.7*m_rotLimiter.calculate(rotInput)
+        -0.5*m_rotLimiter.calculate(rotInput)
             * SwerveDriveTrain.kMaxAngularSpeed;
 
     //System.out.println(xSpeed + " " + ySpeed + " " + rot + " " + System.currentTimeMillis());
-    RobotContainer.swerveDrive.drive(-xSpeed, -ySpeed, rot);
+    RobotContainer.swerveDrive.drive(xSpeed, ySpeed, rot);
   }
 
   // Called once the command ends or is interrupted.

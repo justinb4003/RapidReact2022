@@ -29,7 +29,7 @@ public class BallStateMachine extends SubsystemBase {
   /** Creates a new BallStateMachine. */
   public BallStateMachine() {
     topPhotoEye = new AnalogInput(5);
-    bottomPhotoEye = new AnalogInput(4);
+    bottomPhotoEye = new AnalogInput(6);
   }
 
   public void setIntakeOn(boolean on) {
@@ -139,10 +139,15 @@ public class BallStateMachine extends SubsystemBase {
     }
     //System.out.println(shooterOn);
     if (intakeOn || (shooterOn && RobotContainer.shooter.isUpToSpeed())) {
-      if (intakeOn) RobotContainer.ballIntake.setPowerOn(intakeSubsystemOn);
-      else RobotContainer.ballIntake.setPowerOn(false);
-      RobotContainer.ballDelivery.setPowerOn(deliverySubsystemOn);
+      if (intakeOn) {
+        RobotContainer.ballIntake.setPowerOn(true);
+      }
+      else {
+        RobotContainer.ballIntake.setPowerOn(false);
+      }
       RobotContainer.ballEntry.setPowerOn(entrySubsystemOn);
+      RobotContainer.ballDelivery.setPowerOn(deliverySubsystemOn);
+      
       
     } else{
       RobotContainer.ballIntake.setPowerOn(false);
@@ -150,7 +155,8 @@ public class BallStateMachine extends SubsystemBase {
       RobotContainer.ballEntry.setPowerOn(false);
     }
 
-    SmartDashboard.putNumber("ball state", state);
+    //SmartDashboard.putNumber("ball state", state);
+    //System.out.println(bottomPhotoEye.getVoltage());
   
   }
 }

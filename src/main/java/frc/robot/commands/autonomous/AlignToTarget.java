@@ -12,6 +12,7 @@ public class AlignToTarget extends CommandBase {
   boolean finished = false;
   double kP = 0.017;
   double tolerance = 1;
+  long stopTime;
   /** Creates a new AlignToTarget. */
   public AlignToTarget() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -20,8 +21,10 @@ public class AlignToTarget extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
-  double powerThreshold = .05;
+  public void initialize() {
+    stopTime = System.currentTimeMillis() + 1500;
+  }
+  double powerThreshold = .10;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
@@ -51,6 +54,6 @@ public class AlignToTarget extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return finished;
+    return finished || System.currentTimeMillis() > stopTime;
   }
 }
