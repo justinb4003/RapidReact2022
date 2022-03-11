@@ -23,6 +23,10 @@ public class BallDelivery extends SubsystemBase {
     */
   }
 
+  public void backOut() {
+    leader.set(VictorSPXControlMode.PercentOutput, -0.8);
+  }
+
   public void setPowerOn(boolean on) {
     if(on) leader.set(VictorSPXControlMode.PercentOutput, 0.8);
     else leader.set(VictorSPXControlMode.PercentOutput, 0);

@@ -156,6 +156,10 @@ public class SwerveDriveTrain extends SubsystemBase {
     this.fieldRelative = fieldRelative;
   }
 
+  public boolean isFieldRelative() {
+    return fieldRelative;
+  }
+
   public void resetTurnEncoders() {
     m_frontLeft.resetTurnEncoder();
     m_backLeft.resetTurnEncoder();

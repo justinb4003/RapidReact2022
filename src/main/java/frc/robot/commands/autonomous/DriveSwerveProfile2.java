@@ -14,7 +14,7 @@ import javax.xml.xpath.XPath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class DriveSwerveProfile extends CommandBase {
+public class DriveSwerveProfile2 extends CommandBase {
   /** Creates a new DriveSwerveProfile. */
 
   // input data:  waypoints -> bezier curves
@@ -37,9 +37,11 @@ public class DriveSwerveProfile extends CommandBase {
   int state = ACCEL;
   // velocity change in each state
   double[] deltaV = new double[3];
+  double[] accel = new double[3];
 
   // current data
   double deltaT = 0.02;         // 20 ms update
+  long lastTime;
   double currentTime = 0;       // current time
   double currentVelocity = 0;   // current velocity
   double currentOmega = 0;      // current max angular velocity
@@ -47,7 +49,7 @@ public class DriveSwerveProfile extends CommandBase {
   double currentS = 0;          // current parameter of current Bezier curve (0 <= s <= 1)
   boolean finished = false;     // finished if we've used up all the curves
   
-  public DriveSwerveProfile(double[][] waypoints, double[] headings, 
+  public DriveSwerveProfile2(double[][] waypoints, double[] headings, 
                           double power) {
     // set up input data: headings and bezier curves
     this.headings = headings;
@@ -77,6 +79,10 @@ public class DriveSwerveProfile extends CommandBase {
     deltaV[COAST] = 0;
     deltaV[DECEL] = -maxAccel * deltaT;
 
+    accel[ACCEL] = maxAccel;
+    accel[COAST] = 0;
+    accel[DECEL] = -maxAccel;
+
     addRequirements(RobotContainer.swerveDrive);
   }
 
@@ -88,17 +94,20 @@ public class DriveSwerveProfile extends CommandBase {
     Point2d targetPosition = curves[0].getPosition(0);
     initialOffset = Math2d.diff2d(targetPosition, currentPosition);
     deltaInitialOffset = Math2d.smult(0.01, initialOffset);
+    lastTime = System.currentTimeMillis();
   }
-  long lastTime = 0;
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     long time = System.currentTimeMillis();
-    System.out.println(time - lastTime);
+    if (time == lastTime) return;
+    deltaT = (time - lastTime)/1000.0;
+    System.out.println(time + " " + lastTime + " " + deltaT);
     lastTime = time;
     // update velocity depending on the state
     if (currentTime > tDecel) state = DECEL;
-    currentVelocity += deltaV[state];
+    currentVelocity += accel[state] * deltaT;
     if (currentVelocity > maxSpeed) {
       currentVelocity = maxSpeed;
       state = COAST;
@@ -173,3 +182,4 @@ public class DriveSwerveProfile extends CommandBase {
     return finished;// || currentTime > totalTime;
   }
 }
+

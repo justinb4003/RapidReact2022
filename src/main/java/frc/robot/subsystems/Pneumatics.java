@@ -13,10 +13,10 @@ import frc.robot.Constants;
 
 public class Pneumatics extends SubsystemBase {
   /** Creates a new Pneumatics. */
-  int valve_num = 2;
+  int valve_num = 3;
   public static final int INTAKE = 0;
   public static final int DIVERTER = 1;
-  
+  public static final int HANGINGLOCK = 2;
   Solenoid[] photoEyes = new Solenoid[4];
   int[] photoEyeChannels = new int[] {5,6,7,15};
   boolean[] states = new boolean[valve_num];
@@ -24,9 +24,11 @@ public class Pneumatics extends SubsystemBase {
   public Pneumatics() {
     valves[INTAKE] = new Solenoid(2, PneumaticsModuleType.REVPH, Constants.INTAKE);
     valves[DIVERTER] = new Solenoid(2, PneumaticsModuleType.REVPH, Constants.DIVERTER);
+    valves[HANGINGLOCK] = new Solenoid(2, PneumaticsModuleType.REVPH, Constants.HANGING_LOCK);
 
     states[INTAKE] = false;
     states[DIVERTER] = true;
+    states[HANGINGLOCK] = true;
 
     for (int v = 0; v < valve_num; v++) setValve(v, states[v]);
     
@@ -42,6 +44,7 @@ public class Pneumatics extends SubsystemBase {
   }
 
   public void setValve(int valve, boolean state) {
+    if (valve == DIVERTER) return;
     states[valve] = state;
     valves[valve].set(state);
   }

@@ -6,9 +6,12 @@ package frc.robot;
 
 import javax.sql.rowset.serial.SerialArray;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.commands.autonomous.*;
 import frc.robot.subsystems.*;
@@ -38,11 +41,12 @@ public class RobotContainer {
   public static BallDelivery ballDelivery = new BallDelivery();
   public static BallStateMachine ballStateMachine = new BallStateMachine();
   public static Pneumatics pneumatics = new Pneumatics();
-  
-  XboxController driver = new XboxController(0);
-  XboxController operator = new XboxController(1);
+  public static Hanging hanging = new Hanging();
+  public static XboxController driver = new XboxController(0);
+  public static XboxController operator = new XboxController(1);
 
   Command m_autoCommand = new ThreeBallAuto(); //DriveToPose(100, 20, 90, 0.4);
+  SendableChooser chooser = new SendableChooser<>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -50,8 +54,15 @@ public class RobotContainer {
     swerveDrive.setDefaultCommand(new SwerveDriveCommand(driver));
 
     configureButtonBindings();
-    m_autoCommand = new DriveSwerveProfile(new double[][] {{0,0},{75,75},{150,0}}, 
-                                        new double[] {90, 180}, 0.35);
+
+    chooser.setDefaultOption("Center One Ball", new CenterOneBallAuto());
+    chooser.addOption("Center Four Ball", new CenterFourBall());
+    chooser.addOption("Right Five Ball", new RightFiveBallAuto());
+    chooser.addOption("Left Two Ball", new LeftTwoBall());
+    SmartDashboard.putData("Auton", chooser);
+
+    CameraServer.startAutomaticCapture();
+    
   }
 
   /**
@@ -93,17 +104,26 @@ public class RobotContainer {
     JoystickButton operatorB = new JoystickButton(operator, XboxController.Button.kB.value);
     JoystickButton operatorLBumper = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
     JoystickButton operatorRBumper = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-    XboxTrigger operatorLeftTrigger = new XboxTrigger(operator, false);
-    XboxTrigger operatorRightTrigger = new XboxTrigger(operator, true);
+    JoystickButton operatorStart = new JoystickButton(operator, XboxController.Button.kStart.value);
+    JoystickButton operatorBack = new JoystickButton(operator, XboxController.Button.kBack.value);
+    XboxTrigger operatorDPadUp = new XboxTrigger(operator, XboxTrigger.DPAD_UP);
+    XboxTrigger operatorDPadDown = new XboxTrigger(operator, XboxTrigger.DPAD_DOWN);
+    XboxTrigger operatorLeftTrigger = new XboxTrigger(operator, XboxTrigger.LEFT_TRIGGER);
+    XboxTrigger operatorRightTrigger = new XboxTrigger(operator, XboxTrigger.RIGHT_TRIGGER);
 
     operatorLBumper.whenPressed(new SetIntake(true));
     operatorRBumper.whenPressed(new SetIntake(false));
     operatorX.whenPressed(new SetShot(ShotData.FEET12));
     operatorA.whenPressed(new SetShot(ShotData.FEET10));
     operatorY.whenPressed(new SetShot(ShotData.FEET16));
-    operatorB.whenPressed(new SetShot(ShotData.BUMPER));
+    //operatorB.whenPressed(new SetShot(ShotData.BUMPER));
+    operatorB.whenPressed(new SetShot(ShotData.FEET6));
+    operatorStart.whenPressed(new SetShot(ShotData.FEET8));
+    operatorBack.whenPressed(new SetShot(ShotData.LOWGOAL));
     operatorLeftTrigger.whenActive(new SetShooterOn(true));
     operatorRightTrigger.whenActive(new SetShooterOn(false));
+    operatorDPadUp.whenActive(new LockHanger(false));
+    operatorDPadDown.whenActive(new LockHanger(true));
   }
 
   /**
@@ -117,9 +137,10 @@ public class RobotContainer {
     double[][] waypoints = new double[][] {{300, 29},{222,73},{115,69},{56,56}};
     double[] headings = new double[] {0, 20, 20};
     //m_autoCommand = new DriveSwerveProfile(waypoints, headings, 0.35);
-    m_autoCommand = new RightFiveBallAuto();
-    m_autoCommand = new LeftTwoBall();
-    m_autoCommand = new CenterFourBall();
+    //m_autoCommand = new RightFiveBallAuto();
+    //m_autoCommand = new LeftTwoBall();
+    //m_autoCommand = new CenterFourBall();
+    m_autoCommand = (Command)chooser.getSelected();
     return m_autoCommand;
   }
 }

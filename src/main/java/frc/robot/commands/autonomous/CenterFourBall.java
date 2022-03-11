@@ -16,17 +16,12 @@ public class CenterFourBall extends SequentialCommandGroup {
   /** Creates a new CenterThreeBall. */
   double[][] waypoints = new double[][] {
     {234, 154},
-    {229.464180823351, 106.86910127446444},
-    {200, 87}
-    /*
-    {234,154},
-    {200, 90},
-    {115, 90},
-    {35, 65}
-    */
+    {250, 127},
+    {240, 101},
+    {205, 85}
   };
   
-  double[] headings = new double[] {45, Math2d.goalAngle(waypoints[waypoints.length-1])};
+  double[] headings = new double[] {45, Math2d.goalAngle(waypoints[waypoints.length-1]), Math2d.goalAngle(waypoints[waypoints.length-1])};
   public CenterFourBall() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -34,17 +29,20 @@ public class CenterFourBall extends SequentialCommandGroup {
       new SetOdometry(234, 154, 0),
       new SetIntake(true),
       new SetShot(ShotData.FEET12),
-      new DriveSwerveProfile(waypoints, headings, 0.5),
+      new DriveSwerveProfile2(waypoints, headings, 0.3),
       new SetShooterOn(true),
-      new Wait(1500),
+      new Wait(2000),
       new SetShooterOn(false),
-      new DriveToPose(35, 55, 30, 0.3),
+      //new DriveToPose(20, 49, 30, 0.5),
+      new DriveToPose(35, 40, 30, 0.4),
       new Wait(1500),
       new SetShot(ShotData.FEET10),
-      new DriveToAlignedPose(220, 165, 0.6),
+      new DriveToAlignedPose(200, 165, 0.5),
       new SetShooterOn(true),
-      new Wait(1500),
-      new SetShooterOn(false)
+      new SetIntake(false),
+      new Wait(2000),
+      new SetShooterOn(false),
+      new SetShooter(0)
     );
   }
 }

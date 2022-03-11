@@ -22,6 +22,10 @@ public class BallIntake extends SubsystemBase {
     else intakeMotor.set(VictorSPXControlMode.PercentOutput, 0);
   }
 
+  public void backOut() {
+    intakeMotor.set(VictorSPXControlMode.PercentOutput, -0.8);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

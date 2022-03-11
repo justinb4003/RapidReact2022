@@ -10,15 +10,25 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 /** Add your docs here. */
 public class XboxTrigger extends Trigger {
     XboxController controller;
-    boolean right;
+    int button;
 
-    public XboxTrigger(XboxController controller, boolean right) {
+    public static final int LEFT_TRIGGER = 0;
+    public static final int RIGHT_TRIGGER = 1;
+    public static final int DPAD_UP = 2;
+    public static final int DPAD_DOWN = 3;
+
+    public XboxTrigger(XboxController controller, int button) {
         this.controller = controller;
-        this.right = right;
+        this.button = button;
     }
 
     public boolean get() {
-        if(right) return controller.getRightTriggerAxis() > 0.2; 
-        return controller.getLeftTriggerAxis() > 0.2;
+        switch(button) {
+            case LEFT_TRIGGER: return controller.getLeftTriggerAxis() > 0.2;
+            case RIGHT_TRIGGER: return controller.getRightTriggerAxis() > 0.2;
+            case DPAD_UP: return controller.getPOV() == 0;
+            case DPAD_DOWN: return controller.getPOV() == 180;
+        }
+        return false;
     }  
 }

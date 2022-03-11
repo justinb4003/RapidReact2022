@@ -14,6 +14,7 @@ package frc.robot;
  */
 public final class Constants {
     // CAN ids
+    // swerve drive modules:  10, 11, 12, 13, 20, 21, 22, 23
     public static final int BALLDELIVERYLEADER = 30;
     public static final int BALLDELIVERYFOLLOWER = 31;
     public static final int BALLINTAKE = 40;
@@ -22,9 +23,12 @@ public final class Constants {
     public static final int LEFTSHOOTER = 60;
     public static final int RIGHTSHOOTER = 61;
 
+    public static final int HANGING = 55;
+
     // Solenoid channels
     public static final int INTAKE = 0;
     public static final int DIVERTER = 1;
+    public static final int HANGING_LOCK = 2;
     
     // DIO
     public static final int BOTTOM_EYE = 0;

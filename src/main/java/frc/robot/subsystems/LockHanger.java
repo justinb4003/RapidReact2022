@@ -2,24 +2,24 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class SetShooterOn extends CommandBase {
-  /** Creates a new SetShooterOn. */
-  boolean on;
-  public SetShooterOn(boolean on) {
+public class LockHanger extends CommandBase {
+  /** Creates a new LockHanger. */
+  boolean lock;
+  public LockHanger(boolean lock) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.on = on;
+    this.lock = lock;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.ballStateMachine.setShooterOn(on);
-    //System.out.println("set shooter on");
+    RobotContainer.pneumatics.setValve(Pneumatics.HANGINGLOCK, lock);
+    //System.out.println(lock);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

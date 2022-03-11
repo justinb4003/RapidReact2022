@@ -63,7 +63,9 @@ public class SwerveDriveCommand extends CommandBase {
             * SwerveDriveTrain.kMaxAngularSpeed;
 
     //System.out.println(xSpeed + " " + ySpeed + " " + rot + " " + System.currentTimeMillis());
-    RobotContainer.swerveDrive.drive(xSpeed, ySpeed, rot);
+    double scale = -1;
+    if (RobotContainer.swerveDrive.isFieldRelative()) scale = 1;
+    RobotContainer.swerveDrive.drive(scale * xSpeed, scale*ySpeed, rot);
   }
 
   // Called once the command ends or is interrupted.

@@ -53,6 +53,13 @@ public class BallStateMachine extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    if (RobotContainer.operator.getLeftY() > 0.5) {
+      RobotContainer.ballIntake.backOut();
+      RobotContainer.ballEntry.backOut();
+      //RobotContainer.ballDelivery.backOut();
+      return;
+    }
     boolean debug = false;
     boolean bottomOn;
     boolean topOn;

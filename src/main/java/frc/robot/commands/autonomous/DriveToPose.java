@@ -60,8 +60,8 @@ public class DriveToPose extends CommandBase {
     double rotationSpeed = deltaAngle / 180 * SwerveDriveTrain.kMaxAngularSpeed * rotFactor;
 
     // set drive power
-    System.out.println(xSpeed + " " + ySpeed + " " + rotationSpeed);
-    System.out.println(distance + " " + lastDistance);
+    //System.out.println(xSpeed + " " + ySpeed + " " + rotationSpeed);
+    //System.out.println(distance + " " + lastDistance);
     RobotContainer.swerveDrive.drive(xSpeed, ySpeed, rotationSpeed);
 
     // check to see if we're finished
@@ -78,15 +78,15 @@ public class DriveToPose extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("end");
+    //System.out.println("end");
     RobotContainer.swerveDrive.stopDriveMotor();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.println(finished);
-     return finished;
+    //System.out.println(finished);
+    return finished;
   }
   
 }
