@@ -37,7 +37,7 @@ public class RightFiveBallAuto extends SequentialCommandGroup {
       new SetShot(shot1, true),
       new Wait(1000),
       new SetShot(shot2, true),
-      new DriveForDistance(20, -0.25, 0),
+      new DriveForDistance(20, new double[] {-1, 0}, 0.25), //-0.25, 0),
       new Wait(1800),
       new SetShooter(0),
       //new DriveToPose(32, 50, 30, 0.6),

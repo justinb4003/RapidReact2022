@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.SwerveDriveTrain;
+import frc.robot.utilities.Math2d;
 
 public class DriveToAlignedPose extends CommandBase {
 
@@ -25,11 +26,12 @@ public class DriveToAlignedPose extends CommandBase {
     addRequirements(RobotContainer.swerveDrive);
     targetX = x;
     targetY = y;
-    double centerx = 27*12;
-    double centery = 27*6;
+    /*double centerx = 27*12+6;
+    double centery = 27*6-6;
     double deltax = centerx - x;
     double deltay = centery - y;
-    targetAngle = Math.toDegrees(Math.atan2(deltay, deltax));
+    targetAngle = Math.toDegrees(Math.atan2(deltay, deltax)); */
+    targetAngle = Math2d.goalOffsetAngle(new double[] {x,y}); 
     this.maxPower = maxPower;
   }
 

@@ -14,13 +14,14 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class SwerveDriveTrain extends SubsystemBase {
-
+public class SwerveDriveTrain extends SubsystemBase implements Runnable {
+  Notifier notifier;
 
 // TODO: Robot constants will need to be tuned
   public static final double kMaxSpeed = 15.6 * 12;  // inches per second  4.758; // meters per second
@@ -42,8 +43,8 @@ public class SwerveDriveTrain extends SubsystemBase {
   private final SwerveModule m_backRight = new SwerveModule(12, 22, 2, 730, "Back Right", false);
   private final SwerveModule m_frontRight = new SwerveModule(13, 23, 3, 3907,  "Front Right", false);
   */
-  private final SwerveModule m_frontLeft = new SwerveModule(10, 20, 0, 1033, "Front Left", false);
-  private final SwerveModule m_backLeft = new SwerveModule(11, 21, 1, 3650, "Back Left", false);
+  private final SwerveModule m_frontLeft = new SwerveModule(10, 20, 0, 452, "Front Left", false);
+  private final SwerveModule m_backLeft = new SwerveModule(11, 21, 1, 3715, "Back Left", false);
   private final SwerveModule m_backRight = new SwerveModule(12, 22, 2, 1910, "Back Right", false);
   private final SwerveModule m_frontRight = new SwerveModule(13, 23, 3, 4031,  "Front Right", false);
 
@@ -65,6 +66,8 @@ public class SwerveDriveTrain extends SubsystemBase {
 
   public SwerveDriveTrain() {
     RobotContainer.gyro.reset();
+    notifier = new Notifier(this);
+    notifier.startPeriodic(0.01);
     m_odometry.resetPosition(new Pose2d(), new Rotation2d());
   }
 
@@ -174,6 +177,10 @@ public class SwerveDriveTrain extends SubsystemBase {
     m_frontLeft.stopDriveMotor();
   }
 
+  public void run() {
+    updateOdometry();
+  }
+
     @Override
     public void periodic() {
       // This method will be called once per scheduler run
@@ -183,7 +190,7 @@ public class SwerveDriveTrain extends SubsystemBase {
       SmartDashboard.putNumber("Front Right", m_frontRight.getTurnPosition());
       SmartDashboard.putNumber("Front Left", m_frontLeft.getTurnPosition());
       */
-      updateOdometry();
+      //updateOdometry();
       //System.out.println(fieldRelative);
     }
 }

@@ -137,10 +137,10 @@ public class RobotContainer {
     double[][] waypoints = new double[][] {{300, 29},{222,73},{115,69},{56,56}};
     double[] headings = new double[] {0, 20, 20};
     //m_autoCommand = new DriveSwerveProfile(waypoints, headings, 0.35);
-    //m_autoCommand = new RightFiveBallAuto();
+    m_autoCommand = new RightFiveBall2();
     //m_autoCommand = new LeftTwoBall();
     //m_autoCommand = new CenterFourBall();
-    m_autoCommand = (Command)chooser.getSelected();
+    //m_autoCommand = (Command)chooser.getSelected();
     return m_autoCommand;
   }
 }

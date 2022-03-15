@@ -12,16 +12,19 @@ import frc.robot.RobotContainer;
 import frc.robot.RobotData;
 import frc.robot.subsystems.SwerveDriveTrain;
 import frc.robot.utilities.Math2d;
+import frc.robot.utilities.Point2d;
 
 public class DriveForDistance extends CommandBase {
   /** Creates a new DriveForDistance. */
-  double distance, xspeed, yspeed;
+  double speed, distance;
   Pose2d initialPose;
   double currentSpeed = 0;
-  public DriveForDistance(double distance, double xspeed, double yspeed) {
+  Point2d direction;
+  public DriveForDistance(double distance, double[] dir, double speed) {
     this.distance = distance;
-    this.xspeed = xspeed;
-    this.yspeed = yspeed;
+    direction = new Point2d(dir[0], dir[1]);
+    direction = Math2d.smult(1/direction.length(), direction);
+    this.speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.swerveDrive);
   }
@@ -41,18 +44,19 @@ public class DriveForDistance extends CommandBase {
     double deltaY = pose.getY() - initialPose.getY();
     double currentDistance = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
 
-    if (distance - currentDistance < 0.5*Math.pow(xspeed*RobotData.maxSpeed, 2)/RobotData.maxAcceleration) {
+    if (distance - currentDistance < 0.5*Math.pow(currentSpeed*RobotData.maxSpeed, 2)/RobotData.maxAcceleration) {
       currentSpeed -= 0.02*RobotData.maxAcceleration;
     } else {
       currentSpeed += 0.02*RobotData.maxAcceleration;
-      if (currentSpeed > xspeed * RobotData.maxSpeed) currentSpeed = xspeed * RobotData.maxSpeed;
+      if (currentSpeed > speed * RobotData.maxSpeed) currentSpeed = speed * RobotData.maxSpeed;
     }
+    Point2d velocity = Math2d.smult(currentSpeed, direction);
     double targetAngle = Math2d.goalAngle(new double[] {pose.getX(), pose.getY()});
     double deltaAngle = targetAngle - pose.getRotation().getDegrees();
     while (deltaAngle < -180) deltaAngle += 360;
     while (deltaAngle > 180) deltaAngle -= 360;
     double rotSpeed = deltaAngle/180;
-    RobotContainer.swerveDrive.drive(currentSpeed, 0,
+    RobotContainer.swerveDrive.drive(velocity.x, velocity.y,
       rotSpeed * RobotContainer.swerveDrive.kMaxAngularSpeed);
   }
 
@@ -71,6 +75,6 @@ public class DriveForDistance extends CommandBase {
     double deltaY = current.getY() - initialPose.getY();
     double currentDistance = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
     //System.out.println("current distance = " + currentDistance);
-    return currentDistance > distance - 0.5;
+    return currentDistance > distance - 0.25;
   }
 }

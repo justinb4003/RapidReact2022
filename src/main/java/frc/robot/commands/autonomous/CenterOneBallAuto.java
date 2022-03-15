@@ -23,12 +23,12 @@ public class CenterOneBallAuto extends SequentialCommandGroup {
 
     addCommands(
       new SetOdometry(240, 162, 0),
-      new SetShot(ShotData.FEET8),
+      new SetShot(ShotData.FEET9),
       new SetShooterOn(true),
       new Wait(2000),
       new DriveToAlignedPose(180, 162, .4),
       new SetShooterOn(false),
       new SetShooter(0)
     );
-  }
+  } 
 }
