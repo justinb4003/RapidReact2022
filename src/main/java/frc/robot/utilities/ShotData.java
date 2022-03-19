@@ -23,7 +23,8 @@ public class ShotData {
     public static final int LOWGOAL = 11;
     public static final int FEET9 = 12;
     public static double[] speeds = new double[] {
-        9500, 10000, 10000, 11000, 11500, 12500, 13500, 14000, 15000, 16000, 17000, 5000, 10500
+        //9500, 10000, 10000, 11000, 11500, 12500, 13500, 14000, 15000, 16000, 17000, 5000, 10500
+        6000, 8000, 9000, 10000, 11500, 12500, 13500, 14000, 15000, 16000, 17000, 5000, 10500
     };
     public static boolean[] diverter = new boolean[] {
         false, false, true, true, true, true, true, true, true, true, true, true, true

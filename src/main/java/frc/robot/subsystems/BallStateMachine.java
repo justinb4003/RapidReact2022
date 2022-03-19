@@ -20,6 +20,8 @@ public class BallStateMachine extends SubsystemBase {
   public static final int ONEBALLHIGH = 3;
   public static final int ONEBALLLOWONEBALLMOVE = 4;
   public static final int TWOBALLS = 5;
+  int shotCount = 0;
+  boolean lastTopEye = false;
   int state = EMPTY;
   boolean intakeOn = false;
   boolean shooterOn = false;
@@ -71,6 +73,10 @@ public class BallStateMachine extends SubsystemBase {
       topOn = topPhotoEye.getVoltage() > 0.8;
       //System.out.println(topPhotoEye.getVoltage());
     } 
+    if(!topOn && lastTopEye)shotCount++;
+    SmartDashboard.putNumber("Shots needed", (double)(20-shotCount));
+    lastTopEye = topOn;
+    
     SmartDashboard.putBoolean("Top Eye", topOn);
     SmartDashboard.putBoolean("Bottom Eye", bottomOn);
     boolean intakeSubsystemOn = false;

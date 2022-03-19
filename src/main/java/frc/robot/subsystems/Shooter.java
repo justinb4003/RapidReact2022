@@ -19,23 +19,27 @@ public class Shooter extends SubsystemBase {
   double speed = 0;
   public Shooter() {
     leader = new TalonFX(Constants.LEFTSHOOTER);
-    leader.setInverted(true);
+    leader.setInverted(false);
     follower = new TalonFX(Constants.RIGHTSHOOTER);
     follower.setInverted(false);
-    follower.set(TalonFXControlMode.Follower, Constants.LEFTSHOOTER);
+    //follower.set(TalonFXControlMode.Follower, Constants.LEFTSHOOTER);
     leader.config_kF(0, 1023/20000.0);
     leader.config_kP(0, 0.01);
     leader.setNeutralMode(NeutralMode.Coast);
+    follower.config_kF(0, 1023/20000.0);
+    follower.config_kP(0, 0.01);
+    follower.setNeutralMode(NeutralMode.Coast);
   }
 
   public void setSpeed(double speed) {
     this.speed = speed;
-    leader.set(TalonFXControlMode.Velocity, speed);
+    follower.set(TalonFXControlMode.Velocity, speed);
+    leader.set(TalonFXControlMode.Velocity, speed*1.5);
   }
 
   public boolean isUpToSpeed() {
     if (Math.abs(speed) < 100) return false;
-    return Math.abs(leader.getSelectedSensorVelocity() - speed)/speed < 0.15;
+    return Math.abs(follower.getSelectedSensorVelocity() - speed)/speed < 0.15;
   }
 
   public void incrementSpeed(double increment) {

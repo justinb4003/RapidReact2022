@@ -26,7 +26,8 @@ public class LeftTwoBall extends SequentialCommandGroup {
       new Wait(2000),
       new SetIntake(false),
       new SetShooterOn(false),
-      new DriveForDistance(20, new double[] {-1,0}, 0.25) //-0.25, 0)
+      //new DriveForDistance(20, new double[] {-1,0}, 0.25) //-0.25, 0)
+      new DriveToAlignedPose(164, 234, 0.3)
     );
   }
 }

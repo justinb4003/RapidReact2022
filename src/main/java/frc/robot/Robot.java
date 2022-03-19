@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -20,7 +21,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-
+  long teleopEndTime = 0;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -91,6 +92,10 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    RobotContainer.shooter.setSpeed(0);
+    RobotContainer.ballStateMachine.setShooterOn(false);
+    
+    teleopEndTime = System.currentTimeMillis() + 135000;
     
     //RobotContainer.swerveDrive.setOdometry(300, 70, 90);
     
@@ -100,6 +105,15 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     //System.out.println(RobotContainer.swerveDrive.getOdometry().getPoseMeters());
+    double remainingTime =  ((teleopEndTime - System.currentTimeMillis()) / 1000.0);
+    if(remainingTime<30){
+      if((remainingTime - (int)remainingTime) < 0.25){
+        remainingTime =0;
+      }
+    }
+    SmartDashboard.putNumber("Time Remaining", (int)remainingTime);
+    
+    
   }
 
   @Override

@@ -21,6 +21,7 @@ public class DriveToAlignedPose extends CommandBase {
   double driveFactor = 0;
   double rotFactor = 0;
   double rampDistance = 30;
+  int rangeCount = 0;
   public DriveToAlignedPose(double x, double y, double maxPower) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.swerveDrive);
@@ -31,13 +32,14 @@ public class DriveToAlignedPose extends CommandBase {
     double deltax = centerx - x;
     double deltay = centery - y;
     targetAngle = Math.toDegrees(Math.atan2(deltay, deltax)); */
-    targetAngle = Math2d.goalOffsetAngle(new double[] {x,y}); 
+    targetAngle = Math2d.goalAngle(new double[] {x,y}); 
     this.maxPower = maxPower;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    rangeCount = 0;
    }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -49,6 +51,7 @@ public class DriveToAlignedPose extends CommandBase {
     double deltax = targetX - currentPose.getX();
     double deltay = targetY - currentPose.getY();
     distance = Math.sqrt(deltax * deltax + deltay * deltay);
+    if (distance < 3) rangeCount ++;
 
     // determine rotation
 
@@ -92,7 +95,7 @@ public class DriveToAlignedPose extends CommandBase {
   @Override
   public boolean isFinished() {
     //System.out.println(finished);
-     return finished;
+     return finished || rangeCount >= 10;
   }
   
 }

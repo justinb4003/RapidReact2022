@@ -57,7 +57,7 @@ public class RobotContainer {
 
     chooser.setDefaultOption("Center One Ball", new CenterOneBallAuto());
     chooser.addOption("Center Four Ball", new CenterFourBall());
-    chooser.addOption("Right Five Ball", new RightFiveBallAuto());
+    chooser.addOption("Right Five Ball", new RightFiveBall3());
     chooser.addOption("Left Two Ball", new LeftTwoBall());
     SmartDashboard.putData("Auton", chooser);
 
@@ -116,8 +116,8 @@ public class RobotContainer {
     operatorX.whenPressed(new SetShot(ShotData.FEET12));
     operatorA.whenPressed(new SetShot(ShotData.FEET10));
     operatorY.whenPressed(new SetShot(ShotData.FEET16));
-    //operatorB.whenPressed(new SetShot(ShotData.BUMPER));
-    operatorB.whenPressed(new SetShot(ShotData.FEET6));
+    operatorB.whenPressed(new SetShot(ShotData.BUMPER));
+    //operatorB.whenPressed(new SetShot(ShotData.FEET6));
     operatorStart.whenPressed(new SetShot(ShotData.FEET8));
     operatorBack.whenPressed(new SetShot(ShotData.LOWGOAL));
     operatorLeftTrigger.whenActive(new SetShooterOn(true));
@@ -137,10 +137,10 @@ public class RobotContainer {
     double[][] waypoints = new double[][] {{300, 29},{222,73},{115,69},{56,56}};
     double[] headings = new double[] {0, 20, 20};
     //m_autoCommand = new DriveSwerveProfile(waypoints, headings, 0.35);
-    m_autoCommand = new RightFiveBall2();
+    //m_autoCommand = new RightFiveBall2();
     //m_autoCommand = new LeftTwoBall();
     //m_autoCommand = new CenterFourBall();
-    //m_autoCommand = (Command)chooser.getSelected();
+    m_autoCommand = (Command)chooser.getSelected();
     return m_autoCommand;
   }
 }

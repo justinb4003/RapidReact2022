@@ -93,7 +93,7 @@ public class SwerveModule {
     SwerveModuleState state =
         SwerveModuleState.optimize(desiredState, new Rotation2d(turnAngle));
 
-    SmartDashboard.putNumber(name, currentTurnPosition);
+    //SmartDashboard.putNumber(name, currentTurnPosition);
 
     // Calculate the drive output from the drive PID controller.
     //final double driveOutput =

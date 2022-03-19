@@ -10,13 +10,13 @@ import frc.robot.commands.*;
 import frc.robot.utilities.Math2d;
 import frc.robot.utilities.ShotData;
 
-public class RightFiveBall2 extends SequentialCommandGroup {
+public class RightFiveBall3 extends SequentialCommandGroup {
   double[][] first_waypoints = new double[][] {
-    {298, 25},
+    {298, 28},
     {288.76391294623943, 57.37171717825354},
     {252.66842382795951, 86.20941466523873},
     //{210.55701985663293, 81.42407408006575}
-    {204, 84}
+    {200, 78}
   };
   double[] first_headings = new double[] {45, 20, Math2d.goalAngle(first_waypoints[first_waypoints.length-1])};
   //this works
@@ -33,13 +33,13 @@ public class RightFiveBall2 extends SequentialCommandGroup {
     {148.5384549185883, 82},
     {86.23872279569983, 70},   
     //{24,48}
-    {50, 35}
+    {38, 38}
   
   };
   double[] second_headings = new double[] {30, 45, 45};
 
   /** Creates a new RightFiveBall2. */
-  public RightFiveBall2() {
+  public RightFiveBall3() {
     int shot1 = ShotData.FEET12;
     int shot2 = ShotData.FEET12;
     int shot3 = ShotData.FEET10;
