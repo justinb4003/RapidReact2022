@@ -56,7 +56,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     chooser.setDefaultOption("Center One Ball", new CenterOneBallAuto());
-    chooser.addOption("Center Four Ball", new CenterFourBall());
+    chooser.addOption("Center Four Ball", new CenterFourBall2());
     chooser.addOption("Right Five Ball", new RightFiveBall3());
     chooser.addOption("Left Two Ball", new LeftTwoBall());
     SmartDashboard.putData("Auton", chooser);
