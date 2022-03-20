@@ -15,31 +15,31 @@ import frc.robot.RobotContainer;
 
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
-  TalonFX leader, follower;
+  TalonFX bottom, top;
   double speed = 0;
   public Shooter() {
-    leader = new TalonFX(Constants.LEFTSHOOTER);
-    leader.setInverted(false);
-    follower = new TalonFX(Constants.RIGHTSHOOTER);
-    follower.setInverted(false);
+    top = new TalonFX(Constants.LEFTSHOOTER);
+    top.setInverted(false);
+    bottom = new TalonFX(Constants.RIGHTSHOOTER);
+    bottom.setInverted(false);
     //follower.set(TalonFXControlMode.Follower, Constants.LEFTSHOOTER);
-    leader.config_kF(0, 1023/20000.0);
-    leader.config_kP(0, 0.01);
-    leader.setNeutralMode(NeutralMode.Coast);
-    follower.config_kF(0, 1023/20000.0);
-    follower.config_kP(0, 0.01);
-    follower.setNeutralMode(NeutralMode.Coast);
+    top.config_kF(0, 1023/20000.0);
+    top.config_kP(0, 0.01);
+    top.setNeutralMode(NeutralMode.Coast);
+    bottom.config_kF(0, 1023/20000.0);
+    bottom.config_kP(0, 0.01);
+    bottom.setNeutralMode(NeutralMode.Coast);
   }
 
   public void setSpeed(double speed) {
     this.speed = speed;
-    follower.set(TalonFXControlMode.Velocity, speed);
-    leader.set(TalonFXControlMode.Velocity, speed*1.5);
+    bottom.set(TalonFXControlMode.Velocity, speed); // bottom
+    top.set(TalonFXControlMode.Velocity, speed*1.5); // top
   }
-
+  
   public boolean isUpToSpeed() {
     if (Math.abs(speed) < 100) return false;
-    return Math.abs(follower.getSelectedSensorVelocity() - speed)/speed < 0.15;
+    return Math.abs(bottom.getSelectedSensorVelocity() - speed)/speed < 0.20;
   }
 
   public void incrementSpeed(double increment) {
@@ -51,7 +51,19 @@ public class Shooter extends SubsystemBase {
     if (speed > 22000) speed = 22000;
     RobotContainer.ballStateMachine.setShooterOn(speed != 0.0);
     SmartDashboard.putNumber("Shooter speed:", speed);
-    leader.set(TalonFXControlMode.Velocity, speed);
+    top.set(TalonFXControlMode.Velocity, speed);
+  }
+
+  public void setPercentOutput(double percent) {
+    bottom.set(TalonFXControlMode.PercentOutput, percent);
+  }
+
+  public double getBottomSpeed() {
+    return bottom.getSelectedSensorVelocity();
+  }
+
+  public double getTopSpeed() {
+    return top.getSelectedSensorVelocity();
   }
 
   @Override
