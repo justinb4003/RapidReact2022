@@ -27,7 +27,7 @@ public class Pneumatics extends SubsystemBase {
     valves[HANGINGLOCK] = new Solenoid(2, PneumaticsModuleType.REVPH, Constants.HANGING_LOCK);
 
     states[INTAKE] = false;
-    states[DIVERTER] = true;
+    states[DIVERTER] = false;
     states[HANGINGLOCK] = true;
 
     for (int v = 0; v < valve_num; v++) setValve(v, states[v]);
@@ -44,7 +44,6 @@ public class Pneumatics extends SubsystemBase {
   }
 
   public void setValve(int valve, boolean state) {
-    if (valve == DIVERTER) return;
     states[valve] = state;
     valves[valve].set(state);
   }
@@ -52,6 +51,5 @@ public class Pneumatics extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    //for (int i = 0; i < valve_num; i++) valves[i].set(states[i]);
   }
 }

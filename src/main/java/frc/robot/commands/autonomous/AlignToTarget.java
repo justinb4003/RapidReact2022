@@ -29,7 +29,7 @@ public class AlignToTarget extends CommandBase {
   @Override
   public void execute() {
     if (RobotContainer.limelight.isTargetValid()){
-      double x = -(RobotContainer.limelight.getTargetX()+1.5);
+      double x = -(RobotContainer.limelight.getTargetX()); //+1.5);
       finished = Math.abs(x) < tolerance;
       double rotationPower = kP * x;
       if(Math.abs(rotationPower)<powerThreshold){

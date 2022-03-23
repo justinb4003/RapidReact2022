@@ -17,17 +17,18 @@ public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
   TalonFX bottom, top;
   double speed = 0;
+  double kP = 0.05;
   public Shooter() {
     top = new TalonFX(Constants.LEFTSHOOTER);
     top.setInverted(false);
     bottom = new TalonFX(Constants.RIGHTSHOOTER);
     bottom.setInverted(false);
     //follower.set(TalonFXControlMode.Follower, Constants.LEFTSHOOTER);
-    top.config_kF(0, 1023/20000.0);
-    top.config_kP(0, 0.01);
+    top.config_kF(0, 1023/22000.0);
+    top.config_kP(0, kP);
     top.setNeutralMode(NeutralMode.Coast);
-    bottom.config_kF(0, 1023/20000.0);
-    bottom.config_kP(0, 0.01);
+    bottom.config_kF(0, 1023/18000.0);
+    bottom.config_kP(0, kP);
     bottom.setNeutralMode(NeutralMode.Coast);
   }
 
@@ -39,7 +40,8 @@ public class Shooter extends SubsystemBase {
   
   public boolean isUpToSpeed() {
     if (Math.abs(speed) < 100) return false;
-    return Math.abs(bottom.getSelectedSensorVelocity() - speed)/speed < 0.20;
+    //return Math.abs(bottom.getSelectedSensorVelocity() - speed)/speed < 0.20;
+    return true;
   }
 
   public void incrementSpeed(double increment) {
@@ -55,7 +57,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setPercentOutput(double percent) {
-    bottom.set(TalonFXControlMode.PercentOutput, percent);
+    top.set(TalonFXControlMode.PercentOutput, percent);
   }
 
   public double getBottomSpeed() {

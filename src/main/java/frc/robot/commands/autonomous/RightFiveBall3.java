@@ -18,7 +18,7 @@ public class RightFiveBall3 extends SequentialCommandGroup {
     {288.76391294623943, 57.37171717825354},
     {252.66842382795951, 86.20941466523873},
     //{210.55701985663293, 81.42407408006575}
-    {200, 78}
+    {200, 75}
   };
   double[] first_headings = new double[] {45, 20, Math2d.goalAngle(first_waypoints[first_waypoints.length-1])};
   //this works
@@ -35,7 +35,7 @@ public class RightFiveBall3 extends SequentialCommandGroup {
     {148.5384549185883, 82},
     {86.23872279569983, 70},   
     //{24,48}
-    {38, 38}
+    {30, 35}
   
   };
   double[] second_headings = new double[] {30, 45, 45};

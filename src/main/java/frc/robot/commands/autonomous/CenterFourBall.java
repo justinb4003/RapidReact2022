@@ -28,7 +28,7 @@ public class CenterFourBall extends SequentialCommandGroup {
     {87.66047357296554, 83},
     {45,50}
   };
-  double[] headings = new double[] {45, Math2d.goalAngle(waypoints[waypoints.length-1]), Math2d.goalOffsetAngle(waypoints[waypoints.length-1])};
+  double[] headings = new double[] {45, Math2d.goalAngle(waypoints[waypoints.length-1]), Math2d.goalAngle(waypoints[waypoints.length-1])};
   
   double[] headings2 = new double[] {30, 45, 45};
   public CenterFourBall() {
@@ -50,7 +50,7 @@ public class CenterFourBall extends SequentialCommandGroup {
       new Wait(800),
       new SetIntake(true),
       new Wait(1000),
-      
+
       new SetShot(ShotData.FEET10),
       new DriveToAlignedPose(200, 165, 0.5),
       new SetShooterOn(true),

@@ -117,7 +117,8 @@ public class RobotContainer {
     operatorA.whenPressed(new SetShot(ShotData.FEET10));
     operatorY.whenPressed(new SetShot(ShotData.FEET16));
     //operatorB.whenPressed(new SetShot(ShotData.BUMPER));
-    //operatorB.whenPressed(new SetShot(ShotData.FEET6));
+    
+    operatorB.whenPressed(new SetShot(ShotData.FEET6));
     operatorStart.whenPressed(new SetShot(ShotData.FEET8));
     operatorBack.whenPressed(new SetShot(ShotData.LOWGOAL));
     operatorLeftTrigger.whenActive(new SetShooterOn(true));

@@ -19,8 +19,8 @@ public class LeftTwoBall extends SequentialCommandGroup {
     addCommands(
       new SetOdometry(240, 200, -45),
       new SetIntake(true),
-      new SetShot(ShotData.FEET10),
-      new DriveToAlignedPose(204, 234, 0.4),
+      new SetShot(ShotData.FEET12),
+      new DriveToAlignedPose(204, 236, 0.4),
       new Wait(1000),
       new SetShooterOn(true),
       new Wait(2000),
