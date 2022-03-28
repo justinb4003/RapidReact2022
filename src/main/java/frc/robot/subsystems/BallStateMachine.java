@@ -56,6 +56,15 @@ public class BallStateMachine extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
+    if (RobotContainer.operator.getPOV() == 90) {
+      RobotContainer.shooter.setPercentOutput(-0.5);
+      RobotContainer.ballDelivery.backOut();
+      RobotContainer.ballEntry.backOut();
+      RobotContainer.pneumatics.setValve(Pneumatics.INTAKE, true);
+      RobotContainer.ballIntake.backOut();
+      return;
+    }
+
     if (RobotContainer.operator.getLeftY() > 0.5) {
       RobotContainer.ballIntake.backOut();
       RobotContainer.ballEntry.backOut();

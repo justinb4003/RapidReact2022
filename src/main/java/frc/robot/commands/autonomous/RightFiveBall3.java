@@ -35,8 +35,9 @@ public class RightFiveBall3 extends SequentialCommandGroup {
     {148.5384549185883, 82},
     {86.23872279569983, 70},   
     //{24,48}
-    {30, 35}
-  
+    //{41, 46}
+    {43, 48}
+
   };
   double[] second_headings = new double[] {30, 45, 45};
 
@@ -57,10 +58,18 @@ public class RightFiveBall3 extends SequentialCommandGroup {
       new Wait(1800),
       new SetShooter(0),
       new DriveSwerveProfile3(second_waypoints, second_headings, 0.5),
-      new Wait(1200),
+      new Wait(1400),
+      /*
+      new Wait(700),
+      new SetJustIntake(false),
+      new Wait(500),
+      new SetIntake(true),
+      new Wait(400),
+      */
+
       new ParallelCommandGroup(
         new SequentialCommandGroup(new Wait(1500), new SetShooterSpeed(ShotData.speeds[shot3])),
-        new DriveToAlignedPose(240, 60, 0.6)
+        new DriveToAlignedPose(240, 60, 0.6, -10)
       ),
       new SetShot(shot3, true),
       new Wait(1500),

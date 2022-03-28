@@ -22,6 +22,12 @@ public class DriveToAlignedPose extends CommandBase {
   double rotFactor = 0;
   double rampDistance = 30;
   int rangeCount = 0;
+
+  public DriveToAlignedPose(double x, double y, double maxPower, double angleOffset) {
+    this(x, y, maxPower);
+    targetAngle += angleOffset;
+  }
+  
   public DriveToAlignedPose(double x, double y, double maxPower) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.swerveDrive);

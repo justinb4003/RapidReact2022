@@ -58,6 +58,7 @@ public class Shooter extends SubsystemBase {
 
   public void setPercentOutput(double percent) {
     top.set(TalonFXControlMode.PercentOutput, percent);
+    bottom.set(TalonFXControlMode.PercentOutput, percent);
   }
 
   public double getBottomSpeed() {
