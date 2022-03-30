@@ -1,0 +1,10 @@
+{
+  "download": {
+    "deleteAfter": false,
+    "localDir": "C:\\Users\\allen\\Documents\\DataLog",
+    "serverTeam": "10.40.3.2"
+  },
+  "output": {
+    "outputFolder": "C:\\Users\\allen\\Documents\\DataLog Proc"
+  }
+}

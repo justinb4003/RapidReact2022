@@ -53,11 +53,11 @@ public class RightFiveBall3 extends SequentialCommandGroup {
       new DriveToAlignedPose(first_waypoints[0][0], first_waypoints[0][1], 0.35),
       new SetShot(shot1, true),
       new Wait(800),
-      new DriveSwerveProfile3(first_waypoints, first_headings, 0.4),
+      new DriveSwerveProfile4(first_waypoints, first_headings, 0.4),
       new SetShot(shot2, true),
       new Wait(1800),
       new SetShooter(0),
-      new DriveSwerveProfile3(second_waypoints, second_headings, 0.5),
+      new DriveSwerveProfile4(second_waypoints, second_headings, 0.5),
       new Wait(1400),
       /*
       new Wait(700),

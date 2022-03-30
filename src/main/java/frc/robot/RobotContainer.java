@@ -7,6 +7,8 @@ package frc.robot;
 import javax.sql.rowset.serial.SerialArray;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -44,6 +46,7 @@ public class RobotContainer {
   public static Hanging hanging = new Hanging();
   public static XboxController driver = new XboxController(0);
   public static XboxController operator = new XboxController(1);
+  public static DataLog dataLog;
 
   Command m_autoCommand = new ThreeBallAuto(); //DriveToPose(100, 20, 90, 0.4);
   SendableChooser chooser = new SendableChooser<>();
@@ -54,6 +57,9 @@ public class RobotContainer {
     swerveDrive.setDefaultCommand(new SwerveDriveCommand(driver));
 
     configureButtonBindings();
+    
+    DataLogManager.start();
+    dataLog = DataLogManager.getLog();
 
     chooser.setDefaultOption("Center One Ball", new CenterOneBallAuto());
     chooser.addOption("Center Four Ball", new CenterFourBall2());
