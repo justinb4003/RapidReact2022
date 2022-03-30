@@ -57,7 +57,7 @@ public class DriveSwerveProfile4 extends CommandBase implements Runnable {
   boolean finished = false;     // finished if we've used up all the curves
   DoubleLogEntry targetX, targetY, poseX, poseY, errorX, errorY, targetHeading, poseHeading;
   StringLogEntry messages;
-  BooleanLogEntry isThreadRunning;
+  BooleanLogEntry threadRunningLog;
 
 
   public DriveSwerveProfile4(double[][] waypoints, double[] headings, 
@@ -107,6 +107,7 @@ public class DriveSwerveProfile4 extends CommandBase implements Runnable {
     targetHeading = new DoubleLogEntry(RobotContainer.dataLog, "target heading");
     poseHeading = new DoubleLogEntry(RobotContainer.dataLog, "pose heading");
     messages = new StringLogEntry(RobotContainer.dataLog, "messages");
+    threadRunningLog = new BooleanLogEntry(RobotContainer.dataLog, "is notifier stopped");
 
   }
 
@@ -200,13 +201,13 @@ public class DriveSwerveProfile4 extends CommandBase implements Runnable {
         currentOmega = maxOmega/2.0;
         stopNotifier();
         messages.append("profile finished");
-        isThreadRunning.append(isNotifierFinished());
+        threadRunningLog.append(isNotifierFinished());
         return;
       }
     }
 
     messages.append("profile running");
-    isThreadRunning.append(isNotifierFinished());
+    threadRunningLog.append(isNotifierFinished());
     
     // now deal with the heading of the robot
     double deltaAngle = headings[currentCurveNumber] - currentPose.getRotation().getDegrees();
