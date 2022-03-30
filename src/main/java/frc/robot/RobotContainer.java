@@ -57,9 +57,6 @@ public class RobotContainer {
     swerveDrive.setDefaultCommand(new SwerveDriveCommand(driver));
 
     configureButtonBindings();
-    
-    DataLogManager.start();
-    dataLog = DataLogManager.getLog();
 
     chooser.setDefaultOption("Center One Ball", new CenterOneBallAuto());
     chooser.addOption("Center Four Ball", new CenterFourBall2());
@@ -69,6 +66,11 @@ public class RobotContainer {
 
     CameraServer.startAutomaticCapture();
     
+  }
+
+  public void startLogger() {
+    DataLogManager.start();
+    dataLog = DataLogManager.getLog();
   }
 
   /**

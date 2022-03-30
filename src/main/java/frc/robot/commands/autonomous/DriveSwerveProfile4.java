@@ -132,12 +132,12 @@ public class DriveSwerveProfile4 extends CommandBase implements Runnable {
   public void execute() {}
 
   public boolean isNotifierFinished(){
-    synchronized(this){return !isNotifierRunning;}
+    return !isNotifierRunning;
     
   }
 
   public void stopNotifier() {
-    synchronized(this){isNotifierRunning = false;}
+    isNotifierRunning = false;
   }
 
   public void run() {
@@ -152,6 +152,14 @@ public class DriveSwerveProfile4 extends CommandBase implements Runnable {
     if (currentVelocity > maxSpeed) {
       currentVelocity = maxSpeed;
       state = COAST;
+    }
+
+    if (currentVelocity < 0) {
+      stopNotifier();
+      messages.append("profile finished: v < 0");
+      threadRunningLog.append(isNotifierFinished());
+      System.out.println("FINSIHED: " + currentTime);
+      return;
     }
 
     // Find velocity feedforward term from the profile
