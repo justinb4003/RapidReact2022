@@ -55,7 +55,8 @@ public class DriveSwerveProfile4 extends CommandBase implements Runnable {
   int currentCurveNumber = 0;   // current index of curve
   double currentS = 0;          // current parameter of current Bezier curve (0 <= s <= 1)
   boolean finished = false;     // finished if we've used up all the curves
-  DoubleLogEntry targetX, targetY, poseX, poseY, errorX, errorY, targetHeading, poseHeading;
+  DoubleLogEntry targetX, targetY, poseX, poseY, errorX, errorY, targetHeading, poseHeading,
+                 accelX, accelY, accelZ;
   StringLogEntry messages;
   BooleanLogEntry threadRunningLog;
 
@@ -98,6 +99,14 @@ public class DriveSwerveProfile4 extends CommandBase implements Runnable {
 
     addRequirements(RobotContainer.swerveDrive);
 
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    accelX = new DoubleLogEntry(RobotContainer.dataLog, "accelX");
+    accelY = new DoubleLogEntry(RobotContainer.dataLog, "accelY");
+    accelZ = new DoubleLogEntry(RobotContainer.dataLog, "accelZ");
     targetX = new DoubleLogEntry(RobotContainer.dataLog, "target X");
     targetY = new DoubleLogEntry(RobotContainer.dataLog, "target Y");
     poseX = new DoubleLogEntry(RobotContainer.dataLog, "pose X");
@@ -109,11 +118,6 @@ public class DriveSwerveProfile4 extends CommandBase implements Runnable {
     messages = new StringLogEntry(RobotContainer.dataLog, "messages");
     threadRunningLog = new BooleanLogEntry(RobotContainer.dataLog, "is notifier stopped");
 
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
     Pose2d currentPose = RobotContainer.swerveDrive.getOdometry().getPoseMeters();
     Point2d currentPosition = new Point2d(currentPose.getX(), currentPose.getY());
     Point2d targetPosition = curves[0].getPosition(0);
@@ -182,6 +186,9 @@ public class DriveSwerveProfile4 extends CommandBase implements Runnable {
     Point2d errorVelocity = Math2d.smult(errorSpeed/deltaPosition.length(), deltaPosition);
     Point2d speedPoint2d = Math2d.sum2d(feedForward, errorVelocity);
     
+    accelX.append(RobotContainer.gyro.getAccelX());
+    accelY.append(RobotContainer.gyro.getAccelY());
+    accelZ.append(RobotContainer.gyro.getAccelZ());
     targetX.append(currentPosition.x);
     targetY.append(currentPosition.y);
     poseX.append(currentPose.getX());

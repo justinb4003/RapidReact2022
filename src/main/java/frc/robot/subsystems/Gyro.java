@@ -29,6 +29,18 @@ public class Gyro extends SubsystemBase {
     return gyro.getRotation2d().plus(initialHeading);
   }
 
+  public double getAccelX() {
+    return gyro.getRawAccelX();
+  }
+
+  public double getAccelY() {
+    return gyro.getRawAccelY();
+  }
+
+  public double getAccelZ() {
+    return gyro.getRawAccelZ();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
