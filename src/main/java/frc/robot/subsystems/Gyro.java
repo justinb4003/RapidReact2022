@@ -29,16 +29,16 @@ public class Gyro extends SubsystemBase {
     return gyro.getRotation2d().plus(initialHeading);
   }
 
-  public double getAccelX() {
-    return gyro.getRawAccelX();
+  public double getVelocityX() {
+    return gyro.getVelocityX();
   }
 
-  public double getAccelY() {
-    return gyro.getRawAccelY();
+  public double getVelocityY() {
+    return gyro.getVelocityY();
   }
 
-  public double getAccelZ() {
-    return gyro.getRawAccelZ();
+  public double getVelocityZ() {
+    return gyro.getVelocityZ();
   }
 
   @Override

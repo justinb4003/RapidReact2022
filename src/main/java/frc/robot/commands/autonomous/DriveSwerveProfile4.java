@@ -56,7 +56,7 @@ public class DriveSwerveProfile4 extends CommandBase implements Runnable {
   double currentS = 0;          // current parameter of current Bezier curve (0 <= s <= 1)
   boolean finished = false;     // finished if we've used up all the curves
   DoubleLogEntry targetX, targetY, poseX, poseY, errorX, errorY, targetHeading, poseHeading,
-                 accelX, accelY, accelZ;
+                 velocityX, velocityY, velocityZ;
   StringLogEntry messages;
   BooleanLogEntry threadRunningLog;
 
@@ -104,9 +104,9 @@ public class DriveSwerveProfile4 extends CommandBase implements Runnable {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    accelX = new DoubleLogEntry(RobotContainer.dataLog, "accelX");
-    accelY = new DoubleLogEntry(RobotContainer.dataLog, "accelY");
-    accelZ = new DoubleLogEntry(RobotContainer.dataLog, "accelZ");
+    velocityX = new DoubleLogEntry(RobotContainer.dataLog, "velocityX");
+    velocityY = new DoubleLogEntry(RobotContainer.dataLog, "velocityY");
+    velocityZ = new DoubleLogEntry(RobotContainer.dataLog, "velocityZ");
     targetX = new DoubleLogEntry(RobotContainer.dataLog, "target X");
     targetY = new DoubleLogEntry(RobotContainer.dataLog, "target Y");
     poseX = new DoubleLogEntry(RobotContainer.dataLog, "pose X");
@@ -186,9 +186,9 @@ public class DriveSwerveProfile4 extends CommandBase implements Runnable {
     Point2d errorVelocity = Math2d.smult(errorSpeed/deltaPosition.length(), deltaPosition);
     Point2d speedPoint2d = Math2d.sum2d(feedForward, errorVelocity);
     
-    accelX.append(RobotContainer.gyro.getAccelX());
-    accelY.append(RobotContainer.gyro.getAccelY());
-    accelZ.append(RobotContainer.gyro.getAccelZ());
+    velocityX.append(RobotContainer.gyro.getVelocityX());
+    velocityY.append(RobotContainer.gyro.getVelocityY());
+    velocityZ.append(RobotContainer.gyro.getVelocityZ());
     targetX.append(currentPosition.x);
     targetY.append(currentPosition.y);
     poseX.append(currentPose.getX());
